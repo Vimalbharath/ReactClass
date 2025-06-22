@@ -1,0 +1,70 @@
+Got it! Let's create a simple example where an **array of employees** contains `id`, `name`, `designation`, and `salary`. I'll show you how to iterate over the array and display the information using both **ES5 functions** and **ES6 arrow functions**.
+
+### **1. ES5 Function Example**
+
+In ES5, we use a function to process each employee in the array.
+
+```javascript
+// ES5 Function Example
+
+// Array of employees
+var employees = [
+    { id: 1, name: "John", designation: "Developer", salary: 50000 },
+    { id: 2, name: "Jane", designation: "Designer", salary: 45000 },
+    { id: 3, name: "Mike", designation: "Manager", salary: 60000 }
+];
+
+// Using a regular function to iterate over the array
+employees.forEach(function(employee) {
+    console.log("ID: " + employee.id + ", Name: " + employee.name + 
+                ", Designation: " + employee.designation + ", Salary: $" + employee.salary);
+});
+```
+
+#### **Output (ES5)**:
+```
+ID: 1, Name: John, Designation: Developer, Salary: $50000
+ID: 2, Name: Jane, Designation: Designer, Salary: $45000
+ID: 3, Name: Mike, Designation: Manager, Salary: $60000
+```
+
+### **2. ES6 Arrow Function Example**
+
+In ES6, you can use arrow functions to make the code more concise.
+
+```javascript
+// ES6 Arrow Function Example
+
+// Array of employees
+let employees = [
+    { id: 1, name: "John", designation: "Developer", salary: 50000 },
+    { id: 2, name: "Jane", designation: "Designer", salary: 45000 },
+    { id: 3, name: "Mike", designation: "Manager", salary: 60000 }
+];
+
+// Using an arrow function to iterate over the array
+employees.forEach(employee => {
+    console.log(`ID: ${employee.id}, Name: ${employee.name}, Designation: ${employee.designation}, Salary: $${employee.salary}`);
+});
+```
+
+#### **Output (ES6)**:
+```
+ID: 1, Name: John, Designation: Developer, Salary: $50000
+ID: 2, Name: Jane, Designation: Designer, Salary: $45000
+ID: 3, Name: Mike, Designation: Manager, Salary: $60000
+```
+
+### **Explanation**:
+
+- **ES5**:  
+  We use a regular `function` inside `forEach()` to iterate over the `employees` array. Each `employee` object’s properties (`id`, `name`, `designation`, `salary`) are accessed and displayed.
+
+- **ES6 Arrow Function**:  
+  The arrow function makes the code more concise and readable. The syntax is shorter, but the behavior of iterating over the array and logging the employee information remains the same.
+
+### **Why Use Arrow Functions in ES6?**
+- **Conciseness**: The arrow function is shorter and easier to read.
+- **Lexical `this` binding**: Although not used in this case, arrow functions are useful in cases where you need to maintain the outer context of `this`.
+
+Both examples work perfectly, but the ES6 arrow function approach is often preferred for its brevity and readability.

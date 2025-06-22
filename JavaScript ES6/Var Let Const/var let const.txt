@@ -1,0 +1,72 @@
+### **Definitions**  
+In JavaScript, `var`, `let`, and `const` are used to declare variables, but they behave differently in terms of scope, hoisting, and mutability.  
+
+1. **`var`**:  
+   - Function-scoped (only accessible within the function where it is declared).  
+   - Can be re-declared and updated.  
+   - Hoisted to the top but initialized as `undefined`.  
+   - **Example**:  
+     ```javascript
+     function exampleVar() {
+         var x = 10;
+         if (true) {
+             var x = 20; // Same variable, not block-scoped
+             console.log(x); // 20
+         }
+         console.log(x); // 20 (no block scope)
+     }
+     exampleVar();
+     ```
+   - **Where to use?**  
+     - Avoid using `var` in modern JavaScript since `let` and `const` provide better scoping and safety.
+
+2. **`let`**:  
+   - Block-scoped (only accessible within the block `{}` where it is declared).  
+   - Can be updated but **not re-declared** within the same scope.  
+   - Hoisted but **not initialized** (gives a ReferenceError if accessed before declaration).  
+   - **Example**:  
+     ```javascript
+     function exampleLet() {
+         let x = 10;
+         if (true) {
+             let x = 20; // Different variable (block-scoped)
+             console.log(x); // 20
+         }
+         console.log(x); // 10 (original value)
+     }
+     exampleLet();
+     ```
+   - **Where to use?**  
+     - Use `let` when you need a variable that can be reassigned but should stay within a specific block.
+
+3. **`const`**:  
+   - Block-scoped like `let`.  
+   - Cannot be re-assigned after initialization.  
+   - Hoisted but **not initialized**.  
+   - **Example**:  
+     ```javascript
+     function exampleConst() {
+         const x = 10;
+         if (true) {
+             const y = 20;
+             console.log(y); // 20
+         }
+         console.log(x); // 10
+         // x = 30; // ❌ Error: Assignment to constant variable
+     }
+     exampleConst();
+     ```
+   - **Where to use?**  
+     - Use `const` when you don’t want the value to change (e.g., for constants or objects that shouldn’t be reassigned).  
+
+### **Summary Table**
+| Keyword  | Scope         | Re-assignable? | Re-declarable? | Hoisting Behavior |
+|----------|-------------|---------------|---------------|------------------|
+| `var`    | Function-scoped | ✅ Yes | ✅ Yes | Hoisted with `undefined` |
+| `let`    | Block-scoped | ✅ Yes | ❌ No | Hoisted but not initialized |
+| `const`  | Block-scoped | ❌ No | ❌ No | Hoisted but not initialized |
+
+#### **Best Practice**
+- **Use `const` by default** unless you need to reassign.  
+- **Use `let` if you need to change the value** within the same scope.  
+- **Avoid `var`** unless dealing with legacy code.

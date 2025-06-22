@@ -1,0 +1,66 @@
+In JavaScript, `Map` and `Set` are built-in objects introduced in ES6 (ECMAScript 2015) that allow storing collections of data in a more structured way compared to plain objects and arrays.
+
+🔹 `Map`
+A Map is a collection of key-value pairs where **keys can be of any type (including objects, functions, etc.).
+
+✅ Features:
+- Maintains the insertion order of keys.
+- Keys can be of any data type.
+- Useful when you need a dictionary-like data structure.
+
+🔧 Syntax:
+const myMap = new Map();
+
+// Adding values
+myMap.set('name', 'John');
+myMap.set(1, 'One');
+myMap.set(true, 'Boolean');
+
+// Getting a value
+console.log(myMap.get('name')); // John
+
+// Checking existence
+console.log(myMap.has(1)); // true
+
+// Deleting a key
+myMap.delete(true);
+
+// Iterating over Map
+for (let [key, value] of myMap) {
+  console.log(`${key} => ${value}`);
+}
+
+🔹 `Set`
+A Set is a collection of unique values (no duplicates allowed).
+
+✅ Features:
+- Automatically removes duplicate values.
+- Useful for storing non-repeating items.
+- Values are stored in insertion order.
+
+🔧 Syntax:
+const mySet = new Set();
+
+// Adding values
+mySet.add(10);
+mySet.add(20);
+mySet.add(10); // Duplicate, won't be added
+
+// Checking existence
+console.log(mySet.has(10)); // true
+
+// Deleting a value
+mySet.delete(20);
+
+// Iterating over Set
+for (let value of mySet) {
+  console.log(value);
+}
+
+🔄 Comparison:
+| Feature          | Map                                             | Set                        |
+|------------------|-------------------------------------------------|----------------------------|
+| Stores           | Key-value pairs                                 | Unique values              |
+| Duplicate Keys   | Not allowed                                     | Not applicable             |
+| Duplicate Values | Allowed (if value is same but key is different) | Not allowed                |
+| Order            | Insertion order maintained                      | Insertion order maintained |

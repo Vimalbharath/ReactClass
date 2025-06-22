@@ -1,0 +1,16 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+button {
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.8;
+}
