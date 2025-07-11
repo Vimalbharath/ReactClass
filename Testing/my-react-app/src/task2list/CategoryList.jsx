@@ -2,10 +2,10 @@ import { Component } from "react";
 
 class CategoryList extends Component{
     state ={
-        skills:[{name:"Java"},{name:"Spring"},{name:"Reacts"},
+        skills:["java","spring","react"
         
     ],
-    name:null,
+    skill:null,
     
     }
     
@@ -28,7 +28,7 @@ class CategoryList extends Component{
   }
   handleOnSubmit=(event)=>{
         event.preventDefault()
-        this.addSkill(this.state)
+        this.addSkill(this.state.skill)
        
     }
     handleOnChange=(event)=>{
@@ -39,11 +39,10 @@ class CategoryList extends Component{
         return (<div>
             <h1>List-Example</h1>
             <h2>List of skills:</h2>
-            {
-          this.state.skills.map((skill, index) => {
-            return <div key={index} >{skill.name}</div>;
-          })
-        }
+            
+         {this.state.skills.map((skill, index) => (
+  <div key={skill}>{skill}</div> 
+))}
             <input type="text" name="skill" onChange={this.handleOnChange} ></input>
             <button onClick={this.handleOnSubmit}>Add</button>
             <button onClick={this.removeSkills}>Remove all</button>
