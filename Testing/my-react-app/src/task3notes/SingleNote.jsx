@@ -1,10 +1,10 @@
 function SingleNote(prop) {
-    const{id,note}=prop;
+    const{id,note,removeNote}=prop;
   return (
     <div>
         {id+1 }:
         {note}
-        <button>Delete</button>
+        <button onClick={()=>removeNote(id)}>Delete</button>
     </div>
   );
 }

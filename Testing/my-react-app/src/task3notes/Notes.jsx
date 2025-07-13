@@ -7,7 +7,27 @@ class Notes extends Component{
     note:null,
     
     }
-    
+    handleOnSubmit=(event)=>{
+        event.preventDefault()
+        this.addNote(this.state.note)
+       
+    }
+      addNote = (note) => {
+ 
+        let newState=[...this.state.notes,note]
+        this.setState({notes:newState})
+    }
+   
+
+    onChangeHandler=(event)=>{
+      this.setState({[event.target.name]:event.target.value})
+     
+    }
+
+     removeNote=(id)=>{
+      const newNotes=this.state.notes.filter((note)=>note.id!==id)
+      this.setState({notes:newNotes})
+    }
     render(){
        return (
          <main>
@@ -21,7 +41,7 @@ class Notes extends Component{
             <div className="innerc">
                <h3>List of notes saved</h3>
                 {this.state.notes.map((note,id) => (
-  <div key={id}><SingleNote id={id} note={note}/></div> 
+  <div key={id}><SingleNote id={id} note={note} removeNote={this.removeNote}/></div> 
 ))}
               
                  
@@ -31,8 +51,9 @@ class Notes extends Component{
             
 
             <div className="innerc">
-               <input></input>
-               <button>Add</button>
+               <input type="text" name="note" onChange={this.onChangeHandler}></input>
+               <button onSubmit={this.handleOnSubmit}>Add</button>
+               <button onClick={()=>this.setState({notes:[]})}>Remove All</button>
             </div>
 
             </div>
