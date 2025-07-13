@@ -41,8 +41,8 @@ class CategoryList extends Component{
             <h1>List-Example</h1>
             <h2>List of skills:</h2>
             
-         {this.state.skills.map((skill) => (
-  <div>{skill}</div> 
+         {this.state.skills.map((skill,id) => (
+  <div key={id}>{skill}</div> 
 ))}
             <input type="text" name="skill" onChange={this.handleOnChange} ></input>
             <button onClick={this.handleOnSubmit}>Add</button>
