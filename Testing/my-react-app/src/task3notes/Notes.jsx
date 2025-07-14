@@ -4,23 +4,25 @@ import SingleNote from "./SingleNote";
 class Notes extends Component{
     state ={
         notes:["eat","sleep","rotate"],
-    note:null,
+    newnote:null,
     
     }
     handleOnSubmit=(event)=>{
         event.preventDefault()
-        this.addNote(this.state.note)
+        this.addNote(this.state.newnote)
+        console.log("Submitted:"+ this.state.newnote)
        
     }
-      addNote = (note) => {
+      addNote = (newnote) => {
  
-        let newState=[...this.state.notes,note]
+        let newState=[...this.state.notes,newnote]
         this.setState({notes:newState})
     }
    
 
     onChangeHandler=(event)=>{
       this.setState({[event.target.name]:event.target.value})
+      console.log(event.target.value)
      
     }
 
@@ -51,8 +53,8 @@ class Notes extends Component{
             
 
             <div className="innerc">
-               <input type="text" name="note" onChange={this.onChangeHandler}></input>
-               <button onSubmit={this.handleOnSubmit}>Add</button>
+               <input type="text" name="newnot" onChange={this.onChangeHandler}></input>
+               <button onClick={this.handleOnSubmit}>Add</button>
                <button onClick={()=>this.setState({notes:[]})}>Remove All</button>
             </div>
 
