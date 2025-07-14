@@ -1,21 +1,35 @@
 import { Component } from "react";
 import "./App.css"
 import SingleNote from "./SingleNote";
+import { v4 as uuidv4 } from 'uuid';
+   
 class Notes extends Component{
     state ={
-        notes:["eat","sleep","rotate"],
+        notes:[{"id":4,"text":"rotate"},
+     {"id":2,"text":"eat"},
+    {"id":3,"text":"sleep"} ],
     newnote:null,
     
     }
+     uniqueId = uuidv4();
+  //   generateUniqueId = () => {
+  //   // A simple method to generate a unique ID based on timestamp and random number
+  //   return Date.now() + Math.random().toString(36).substr(2, 9);
+  // };
     handleOnSubmit=(event)=>{
         event.preventDefault()
-        this.addNote(this.state.newnote)
+        this.addNote(this.newnote)
         console.log("Submitted:"+ this.state.newnote)
        
     }
+
+  
       addNote = (newnote) => {
  
-        let newState=[...this.state.notes,newnote]
+        let newState=[...this.state.notes,{
+        id:uuidv4(),
+        text:this.state.newnote
+     }]
         this.setState({notes:newState})
     }
    
@@ -42,9 +56,11 @@ class Notes extends Component{
 
             <div className="innerc">
                <h3>List of notes saved</h3>
-                {this.state.notes.map((note,id) => (
-  <div key={id}><SingleNote id={id} note={note} removeNote={this.removeNote}/></div> 
+               
+                {this.state.notes.map((text,id) => (
+  <div key={text.id}><SingleNote id={text.id} text={text.text} removeNote={this.removeNote}/></div> 
 ))}
+
               
                  
                
@@ -53,7 +69,7 @@ class Notes extends Component{
             
 
             <div className="innerc">
-               <input type="text" name="newnot" onChange={this.onChangeHandler}></input>
+               <input type="text" name="newnote" onChange={this.onChangeHandler}></input>
                <button onClick={this.handleOnSubmit}>Add</button>
                <button onClick={()=>this.setState({notes:[]})}>Remove All</button>
             </div>
