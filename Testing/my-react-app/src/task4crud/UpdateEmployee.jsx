@@ -31,10 +31,10 @@ class UpdateEmployee extends Component {
              <div>
                  <div>Update Employee</div>
                 <form onSubmit={this.handleOnSubmit}>
-                    Id:<input type="text" name="id" onChange={this.handleOnChange}/>
-                    FirstName:<input type="text" name="firstName" onChange={this.handleOnChange}/>
-                    LastName:<input type="text" name="lastName" onChange={this.handleOnChange}/>
-                    Address:<input type="text" name="address" onChange={this.handleOnChange}/>
+                    Id:<input type="text" value={this.state.id} name="id" onChange={this.handleOnChange}/>
+                    FirstName:<input type="text" value={this.state.firstName} name="firstName" onChange={this.handleOnChange}/>
+                    LastName:<input type="text" value={this.state.lastName} name="lastName" onChange={this.handleOnChange}/>
+                    Address:<input type="text" value={this.state.address} name="address" onChange={this.handleOnChange}/>
                     <button>Save</button>
                 </form>
               </div>

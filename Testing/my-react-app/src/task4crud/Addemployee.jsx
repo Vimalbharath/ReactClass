@@ -18,7 +18,7 @@ class Addemployee extends Component {
 
     handleOnSubmit=(event)=>{
         event.preventDefault()
-        this.props.Addemployee(this.state)
+        this.props.addEmployee(this.state)
         event.target.reset();
     }
 

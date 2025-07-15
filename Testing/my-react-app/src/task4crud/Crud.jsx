@@ -11,8 +11,9 @@ class Crud extends Component{
                 {"id":"2","firstName":"Virat","lastName":"Kholi","address":"Bangalore"},
                 {"id":"3","firstName":"Rohit","lastName":"Sharma","address":"Mumbai"}
             ],
-            employee:{},
-            updateFlag:false
+            employee:{"id":"4","firstName":"gsg","lastName":"Sagaharma","address":"sgs"},
+            updateFlag:false,
+            addFlag:false
 
          };
     }
@@ -26,10 +27,14 @@ class Crud extends Component{
 
     handleEdit=(index)=>{
         let emp = this.state.employees.slice(index,index+1)
+         console.log(emp)
         let newstate = this.state.employees.filter((employee,ind)=>{
             return ind !== index;
         });
+         console.log(newstate)
+      
         this.setState({employee:emp[0],employees:newstate,updateFlag:true})
+          console.log(this.state.employee)
     }
 
     addEmployee=(employee)=>{
@@ -42,7 +47,11 @@ class Crud extends Component{
         return (
             <div>
                 <h1>Employee List</h1>
-                <button>Add Student</button>
+                <button onClick={()=>this.setState({addFlag:true})}>Add Employee</button>
+                 <button onClick={()=>this.setState({addFlag:false})}>X</button>
+                {this.state.updateFlag?(<UpdateEmployee employee={this.state.employee} addEmployee={this.addEmployee}/>):(this.state.addFlag)&&(<Addemployee addEmployee={this.addEmployee}/>)
+            }
+            
                 <table className="table table-dark">
                     <thead>
                         <th>ID</th>
@@ -66,8 +75,7 @@ class Crud extends Component{
                         }
                     </tbody>
                 </table>
-            {this.state.updateFlag?(<UpdateEmployee employee={this.state.employee} addEmployee={this.addEmployee}/>):(<Addemployee addEmployee={this.addEmployee}/>)
-            }
+            
             </div>
         );
     }
