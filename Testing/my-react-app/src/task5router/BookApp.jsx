@@ -3,6 +3,7 @@ import { BrowserRouter as Router, NavLink, Navigate, Routes, Route } from 'react
 import AddBook from "./AddBook";
 import Dashboard from "./Dashboard";
 import Help from "./Help"
+import BookDetail from "./BookDetail";
 
 class BookApp extends Component{
      constructor(props) {
@@ -41,7 +42,8 @@ class BookApp extends Component{
         <Route path="dashboard" element={<Dashboard books={this.state.books}/>} />
             <Route path="addbook" element={<AddBook addBook={this.handleAddBook}/>} />
             <Route path="help" element={<Help />} />
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard/books/:bookId" element={<BookDetail books={this.state.books} />} />
+            <Route path="/" element={<Dashboard books={this.state.books}/>} />
             <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
             </div>
