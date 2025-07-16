@@ -1,0 +1,15 @@
+main{
+    min-height: 100vh;
+    justify-content: center;
+    display: flex;
+    /* align-items: center; */
+}
+.container
+{
+    background-color: bisque;
+    width: 70vw;
+    margin:5rem 0;
+    
+    
+}
+
