@@ -6,10 +6,10 @@ class UpdateBook extends Component {
         super(props);
         console.log(props.book)
         this.state = {
-            id:'',
-            book: '', 
-            author:'',
-            description: '' 
+            id:props.book.id,
+            book: props.book.book, 
+            author:props.book.author,
+            description: props.book.description
         };
     }
 
@@ -22,7 +22,7 @@ class UpdateBook extends Component {
       this.props.editoff({
             id:this.state.id,
             book: this.state.book,
-             author: this.state.author,
+            author: this.state.author,
             description: this.state.description
         });
         // this.setState({
@@ -41,10 +41,10 @@ class UpdateBook extends Component {
             <div>
                 <div>Update Book</div>
                 <form onSubmit={this.handleSubmit}>
-                    Id:<input type="text" name="id" onChange={this.handleOnChange}/>
-                    Book Title:<input type="text" name="book" onChange={this.handleOnChange}/>
-                    Author:<input type="text" name="author" onChange={this.handleOnChange}/>
-                    Description:<input type="text" name="description" onChange={this.handleOnChange}/>
+                    Id:<input type="text" value={this.state.id} name="id" onChange={this.handleOnChange}/>
+                    Book Title:<input type="text" value={this.state.book} name="book" onChange={this.handleOnChange}/>
+                    Author:<input type="text" value={this.state.author} name="author" onChange={this.handleOnChange}/>
+                    Description:<input type="text" value={this.state.description} name="description" onChange={this.handleOnChange}/>
                     <button>Save</button>
                 </form>
             </div>

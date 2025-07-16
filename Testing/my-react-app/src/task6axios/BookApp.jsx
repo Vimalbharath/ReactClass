@@ -12,7 +12,7 @@ class BookApp extends Component{
             books:[
                 
             ],
-            book:{},
+            book:null,
             showdashboard:true,
             addFlag:false,
             updateFlag:false
@@ -76,10 +76,12 @@ class BookApp extends Component{
 
   // NEW: Update a single book
    editon = (bookid) => {
-     
-      this.setState(prevState => ({showdashboard:false,addFlag:false,updateFlag:true,
-        book: prevState.books.find(book => String(book.id) === String(bookid))
-      }));
+      console.log(this.state.book);
+        let editor=this.state.books.find(book => String(book.id) === String(bookid))
+
+      this.setState({showdashboard:false,addFlag:false,updateFlag:true,book:editor
+      });
+      console.log(editor)
    }
   editoff = (updatedBookData) => {
     Axios.put(`http://localhost:3006/books/${updatedBookData.id}`, updatedBookData)
@@ -111,7 +113,7 @@ class BookApp extends Component{
          <button onClick={()=>this.setState({showdashboard:false,addFlag:true,updateFlag:false})}>Add Book </button>
          {this.state.showdashboard && <Dashboard books={this.state.books} delete={this.handleDeleteBook} editon={this.editon}/>}
          {this.state.addFlag && (<AddBook addBook={this.handleAddBook}/>)}
-         {this.state.updateFlag && <UpdateBook editoff={this.editoff}/>}
+         {this.state.updateFlag && <UpdateBook editoff={this.editoff} book={this.state.book}/>}
           </div>
         );
     }
