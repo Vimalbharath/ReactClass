@@ -15,8 +15,8 @@ class Dashboard extends Component {
                     <h1>{book.id} : {book.book}</h1>
                     <h2>{book.author}</h2>
                     <p>{book.description}</p>
-                    <button>Remove</button>
-                    <button>Edit</button>
+                    <button onClick={()=>this.props.delete(book.id)}>Remove</button>
+                    <button onClick={()=>this.props.editon(book.id)}>Edit</button>
                  
                   </div>
                )

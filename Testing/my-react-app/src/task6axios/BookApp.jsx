@@ -2,6 +2,7 @@ import { Component } from "react"
 import AddBook from "./AddBook";
 import Dashboard from "./Dashboard";
 import Axios from "axios";
+import UpdateBook from "./UpdateBook";
 
 
 class BookApp extends Component{
@@ -13,7 +14,8 @@ class BookApp extends Component{
             ],
             book:{},
             showdashboard:true,
-            addFlag:false
+            addFlag:false,
+            updateFlag:false
 
          };
     }
@@ -51,13 +53,65 @@ class BookApp extends Component{
         // Revert UI if optimistic update was used and failed, or show error
       });
   };
+
+ 
+  handleDeleteBook = (bookId) => {
+    if (window.confirm(`Are you sure you want to delete book with ID: ${bookId}?`)) {
+      Axios.delete(`http://localhost:3006/books/${bookId}`)
+        .then(() => {
+          console.log(`Book with ID ${bookId} deleted successfully.`);
+          // Optimistically update UI or re-fetch
+          this.setState(prevState => ({
+            books: prevState.books.filter(book => String(book.id) !== String(bookId)),
+           showdashboard:true
+          }));
+          alert("Book deleted successfully!");
+        })
+        .catch((error) => {
+          console.error(`Error deleting book with ID ${bookId}:`, error);
+          alert("Failed to delete book. Please try again.");
+        });
+    }
+  };
+
+  // NEW: Update a single book
+   editon = (bookid) => {
+     
+      this.setState(prevState => ({showdashboard:false,addFlag:false,updateFlag:true,
+        book: prevState.books.find(book => String(book.id) === String(bookid))
+      }));
+   }
+  editoff = (updatedBookData) => {
+    Axios.put(`http://localhost:3006/books/${updatedBookData.id}`, updatedBookData)
+      .then((res) => {
+        console.log("Book updated successfully in DB:", res.data);
+       
+       
+        this.setState(prevState => ({
+          books: prevState.books.map(book =>
+            String(book.id) === String(res.data.id) ? res.data : book
+          ),
+         
+          showdashboard:true,
+          addFlag:false ,
+          updateFlag:false
+        }));
+        alert("Book updated successfully!");
+      })
+      .catch((error) => {
+        console.error("Error updating book:", error);
+        alert("Failed to update book. Please try again.");
+      });
+  };
     render(){
         return(<div>
          <h1>React Axios</h1>
          <h2>Book Management App</h2>
-         <button onClick={()=>this.setState({showdashboard:true,addFlag:false})}>Dashboard</button>
-         <button onClick={()=>this.setState({showdashboard:false,addFlag:true})}>Add Book </button>
-         {this.state.showdashboard?<Dashboard books={this.state.books}/>:(<AddBook addBook={this.handleAddBook}/>)}
+         <button onClick={()=>this.setState({showdashboard:true,addFlag:false,updateFlag:false})}>Dashboard</button>
+         <button onClick={()=>this.setState({showdashboard:false,addFlag:true,updateFlag:false})}>Add Book </button>
+         {this.state.showdashboard && <Dashboard books={this.state.books} delete={this.handleDeleteBook} editon={this.editon}/>}
+         {this.state.addFlag && (<AddBook addBook={this.handleAddBook}/>)}
+         {this.state.updateFlag && <UpdateBook editoff={this.editoff}/>}
           </div>
         );
     }
