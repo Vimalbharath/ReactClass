@@ -1,13 +1,28 @@
 {
-  "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
-  ],
-  "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  "books": [
+    {
+      "id": "1",
+      "book": "MS",
+      "author": "Dhoni",
+      "description": "This is book about Dhoni"
+    },
+    {
+      "id": "2",
+      "book": "Virat",
+      "author": "Dhoni",
+      "description": "This is book about Kholi"
+    },
+    {
+      "id": "3",
+      "book": "Rohit",
+      "author": "Dhoni",
+      "description": "This is book about Sharma"
+    },
+    {
+      "id": "4",
+      "book": "gbwj",
+      "author": "kjbk",
+      "description": "bjbkj"
+    }
+  ]
 }

@@ -4,7 +4,7 @@ main{
     display: flex;
     /* align-items: center; */
 }
-.container
+.single
 {
     background-color: bisque;
     width: 70vw;
