@@ -17,12 +17,6 @@
       "book": "Rohit",
       "author": "Sharma",
       "description": "This is book about Sharma"
-    },
-    {
-      "id": "5",
-      "book": "hs",
-      "author": "he",
-      "description": "he"
     }
   ]
 }
