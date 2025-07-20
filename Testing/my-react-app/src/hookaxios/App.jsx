@@ -6,6 +6,7 @@ const API_URL = 'http://localhost:3006/employees';
 function App() {
   const [employees, setEmployees] = useState([]);
   const [newEmp, setNewEmp] = useState({ name: '', role: '' });
+  const [editingEmp, setEditingEmp] = useState(null); 
 
   // Fetch employees on component mount
   useEffect(() => {
@@ -23,9 +24,31 @@ function App() {
     setNewEmp({ name: '', role: '' });
     fetchEmployees(); // Refresh list
   };
-   const deleteEmployee = async (name) => {
-    await axios.delete(API_URL,name );
+   const deleteEmployee = async (id) => {
+    await axios.delete(`${API_URL}/${id}`);
     fetchEmployees(); // Refresh list
+  };
+   const handleEditClick = (employee) => {
+    setEditingEmp(employee); 
+    setNewEmp({ name: employee.name, role: employee.role });
+  };
+   const cancelEdit = () => {
+    setEditingEmp(null);
+    setNewEmp({ name: '', role: '' }); 
+  };
+  const updateEmployee = async () => {
+    if (!newEmp.name.trim() || !newEmp.role.trim()) {
+      return alert("All fields are required!");
+    }
+    if (!editingEmp) return;
+    await axios.put(`${API_URL}/${editingEmp.id}`, {
+        id: editingEmp.id, 
+        name: newEmp.name.trim(),
+        role: newEmp.role.trim()
+      });
+      setEditingEmp(null);
+      setNewEmp({ name: '', role: '' });
+      fetchEmployees();
   };
 
   return (
@@ -44,13 +67,22 @@ function App() {
         value={newEmp.role}
         onChange={(e) => setNewEmp({ ...newEmp, role: e.target.value })}
       />
-      <button onClick={addEmployee} className='btn btn-primary'>Add Employee</button>
+      {editingEmp ? (
+           
+            <>
+              <button onClick={updateEmployee} className='btn btn-success me-2'>Save Changes</button>
+              <button onClick={cancelEdit} className='btn btn-secondary'>Cancel</button>
+            </>
+          ) : (
+           
+            <button onClick={addEmployee} className='btn btn-primary'>Add Employee</button>
+          )}
 
       <ul>
         {employees.map(emp => (
           <li key={emp.id}>
-            {emp.name} - {emp.role} <button className='btn btn-danger' onClick={()=>deleteEmployee(emp.name)}>X</button>
-            <button className='btn btn-warning'> Edit</button>
+            {emp.name} - {emp.role} <button className='btn btn-danger' onClick={()=>deleteEmployee(emp.id)}>X</button>
+            <button className='btn btn-warning' onClick={()=>handleEditClick(emp)}> Edit</button>
           </li>
         ))}
       </ul>
