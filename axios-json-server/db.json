@@ -49,5 +49,17 @@
       "policyType": "Saving",
       "premium": 5000
     }
+  ],
+  "contacts": [
+    {
+      "id": "4dc5",
+      "name": "vimal",
+      "email": "vimal@email.com"
+    },
+    {
+      "id": "0b3b",
+      "name": "abc",
+      "email": "abc@gmail.com"
+    }
   ]
 }
