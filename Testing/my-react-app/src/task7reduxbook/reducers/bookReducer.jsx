@@ -1,21 +1,21 @@
 const initialState = {
   items: [],
-   loading: false,
+  loading: false,
   error: null,
 };
 
 const bookReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'FETCH_BOOK_SUCCESS':
+    case 'FETCH_BOOKS_SUCCESS':
       return { ...state, items: action.payload };
     case 'ADD_BOOK_SUCCESS':
       return { ...state, items: [...state.items, action.payload] };
-        case 'DELETE_BOOK_SUCCESS': // NEW: Handle delete
+    case 'DELETE_BOOK_SUCCESS': 
       return {
         ...state,
         items: state.items.filter(book => book.id !== action.payload),
       };
-    case 'UPDATE_BOOK_SUCCESS': // NEW: Handle update
+    case 'UPDATE_BOOK_SUCCESS': 
       return {
         ...state,
         items: state.items.map(book =>

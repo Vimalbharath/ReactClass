@@ -17,28 +17,27 @@ const BookDashboard = ({ books, onDeleteBook, onEditBook }) => {
 
   return (
     <div>
-      <h3 className="mb-3">Current Books</h3> {/* Added margin-bottom */}
-
-      {/* Search Input Field */}
-      <div className="mb-4"> {/* Replaced inline style with Bootstrap margin-bottom */}
+      <h3 className="mb-3">List of Books</h3> 
+  
+      <div className="mb-4"> 
         <input
           type="text"
-          className="form-control" // Bootstrap class for full-width input styling
+          className="form-control" 
           placeholder="Search by title, author, or description..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
-      {/* Display the filtered list of books */}
+     
       {filteredBooks.length === 0 ? (
-        <p className="text-muted">{searchTerm ? "No books found matching your search." : "No books available. Add some!"}</p> // Added text-muted for subtle color
+        <p className="text-muted">{searchTerm ? "No books found matching your search." : "No books available. Add some!"}</p> 
       ) : (
-        <ul className="list-unstyled"> {/* Replaced inline style with Bootstrap list-unstyled */}
+        <ul className="list-unstyled"> 
           {filteredBooks.map((bookItem) => (
             <li
               key={bookItem.id}
-              className="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center" // Replaced inline styles with Bootstrap classes
+              className="mb-3 pb-2 border-bottom d-flex justify-content-between align-items-center" 
             >
               <div>
                 <div><strong>Title:</strong> {bookItem.book}</div>
@@ -46,14 +45,14 @@ const BookDashboard = ({ books, onDeleteBook, onEditBook }) => {
                 <div><strong>Description:</strong> {bookItem.description}</div>
               </div>
               <div>
-                {/* Edit Button */}
+                
                 <button
-                  className="btn btn-warning btn-sm me-2" // Replaced inline style with Bootstrap margin-end
+                  className="btn btn-warning btn-sm me-2" 
                   onClick={() => onEditBook(bookItem)}
                 >
                   Edit
                 </button>
-                {/* Delete Button */}
+               
                 <button
                   className="btn btn-danger btn-sm"
                   onClick={() => onDeleteBook(bookItem.id)}
