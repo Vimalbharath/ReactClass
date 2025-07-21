@@ -35,5 +35,19 @@
       "name": "grtwh",
       "role": "gnrs"
     }
+  ],
+  "insurances": [
+    {
+      "id": "8975",
+      "policyHolder": "Vimal",
+      "policyType": "Health",
+      "premium": 4000
+    },
+    {
+      "id": "5153",
+      "policyHolder": "Bharath",
+      "policyType": "Saving",
+      "premium": 5000
+    }
   ]
 }
