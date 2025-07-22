@@ -9,8 +9,9 @@ const App=()=>{
      const [editingBook, setEditingBook] = useState(null);
      
 const handleEditClick = (book) => {
+    console.log(book)
     setEditingBook(book); 
-    setActiveTab('addBook'); 
+    setActiveTab('addbook'); 
   };
    const handleCancelEdit = () => {
     setEditingBook(null); 
@@ -29,8 +30,8 @@ const handleEditClick = (book) => {
             <button className="btn btn-secondary mb-5 me-5" 
             onClick={()=>setActiveTab('help')}
             >Help</button>
-            {(activeTab==='dashboard')&& <BookDashboard onEditBook={handleEditClick}/>}
-            {(activeTab==='addbook')&& <AddBookForm onCancel={handleCancelEdit} editingBook={editingBook}/>}
+            {(activeTab==='dashboard')&& <BookDashboard onEditBook={handleEditClick} setActiveTab={setActiveTab}/>}
+            {(activeTab==='addbook')&& <AddBookForm setActiveTab={setActiveTab} onCancel={handleCancelEdit} editingBook={editingBook}/>}
             {(activeTab==='help')&& <Help/>}
             
         </div>

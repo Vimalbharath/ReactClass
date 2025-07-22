@@ -1,13 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks } from '../reducers/bookSlice';
+import { fetchBooks,deleteBook } from '../reducers/bookSlice';
 
-const BookDashboard = ({  onDeleteBook, onEditBook }) => {
+const BookDashboard = ({  onEditBook }) => {
   const dispatch = useDispatch();
   const { list, loading, error } = useSelector((state) => state.book);
   useEffect(() => {
     dispatch(fetchBooks());
-  }, [dispatch]);
+  }, [list]);
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -61,7 +61,7 @@ const BookDashboard = ({  onDeleteBook, onEditBook }) => {
                
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => onDeleteBook(bookItem.id)}
+                  onClick={() => dispatch(deleteBook(bookItem.id))}
                 >
                   Remove
                 </button>

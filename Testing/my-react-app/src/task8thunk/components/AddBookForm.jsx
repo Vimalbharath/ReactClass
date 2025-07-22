@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { addBook,updateBook } from '../reducers/bookSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const AddBookForm = ({ onAddBook, onUpdateBook, onCancel, editingBook }) => {
+const AddBookForm = ({ setActiveTab, onCancel, editingBook }) => {
+   const dispatch = useDispatch();
+  const { list, loading, error } = useSelector((state) => state.book);
   const [bookTitle, setBookTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [description, setDescription] = useState("");
@@ -20,32 +24,37 @@ const AddBookForm = ({ onAddBook, onUpdateBook, onCancel, editingBook }) => {
     }
   }, [editingBook]); 
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!bookTitle.trim() || !author.trim() || !description.trim()) {
-  //     alert("Book Title, Author, and Description are required!");
-  //     return;
-  //   }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!bookTitle.trim() || !author.trim() || !description.trim()) {
+      alert("Book Title, Author, and Description are required!");
+      return;
+    }
 
-  //   const bookData = {
-  //     book: bookTitle.trim(),
-  //     author: author.trim(),
-  //     description: description.trim()
-  //   };
+    const bookData = {
+      book: bookTitle.trim(),
+      author: author.trim(),
+      description: description.trim()
+    };
 
-  //   if (editingBook) {
+    if (editingBook) {
       
-  //     onUpdateBook({ ...bookData, id: editingBook.id });
-  //   } else {
+      // onUpdateBook({ ...bookData, id: editingBook.id });
+      console.log("Edit book")
+      dispatch(updateBook({ ...bookData, id: editingBook.id }))
+      setActiveTab('dashboard')
+    } else {
      
-  //     onAddBook(bookData);
-  //   }
-  // };
+      console.log("Add book")
+      dispatch(addBook(bookData))
+      setActiveTab('dashboard')
+    }
+  };
 
   return (
     <div>
       <h3>{editingBook ? 'Edit Book Details' : 'Add New Book'}</h3>
-      <form >
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="bookTitle"
