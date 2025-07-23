@@ -3,7 +3,7 @@ import bookReducer from './reducers/bookReducer';
 
 const store = configureStore({
   reducer: {
-    books: bookReducer,
+    qwerty: bookReducer,
   },
 });
 

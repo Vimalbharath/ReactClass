@@ -11,7 +11,7 @@ const App = () => {
 
   // Redux hooks
   const dispatch = useDispatch();
-  const books = useSelector(state => state.books.items); 
+  const books = useSelector(state => state.qwerty.items); 
 
   useEffect(() => {
     const fetchBooks = async () => {
