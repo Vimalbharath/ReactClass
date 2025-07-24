@@ -87,5 +87,89 @@
       "description": "gweyrerh",
       "id": "91dd"
     }
+  ],
+ 
+  "employees1": [
+    {
+      "id": "emp_ceo_001",
+      "firstName": "Elon",
+      "lastName": "Musk",
+      "email": "elon@spacex.com",
+      "role": "CEO",
+      "department": "Executive"
+     
+    },
+    {
+      "id": "emp_dir_001",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "role": "Director",
+      "department": "Engineering",
+      "reportsTo": "emp_ceo_001"
+    },
+    {
+      "id": "emp_dir_002",
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@example.com",
+      "role": "Director",
+      "department": "Sales",
+      "reportsTo": "emp_ceo_001"
+    },
+    {
+      "id": "emp_mgr_001",
+      "firstName": "Emily",
+      "lastName": "Clark",
+      "email": "emily.c@example.com",
+      "role": "Manager",
+      "department": "Engineering",
+      "reportsTo": "emp_dir_001"
+    },
+    {
+      "id": "emp_mgr_002",
+      "firstName": "David",
+      "lastName": "Lee",
+      "email": "david.l@example.com",
+      "role": "Manager",
+      "department": "Sales",
+      "reportsTo": "emp_dir_002"
+    },
+    {
+      "id": "emp_assoc_001",
+      "firstName": "Chris",
+      "lastName": "Green",
+      "email": "chris.g@example.com",
+      "role": "Associate",
+      "department": "Engineering",
+      "reportsTo": "emp_mgr_001"
+    },
+    {
+      "id": "emp_assoc_002",
+      "firstName": "Sophia",
+      "lastName": "Moore",
+      "email": "sophia.m@example.com",
+      "role": "Associate",
+      "department": "Engineering",
+      "reportsTo": "emp_mgr_001"
+    },
+    {
+      "id": "emp_assoc_003",
+      "firstName": "Liam",
+      "lastName": "Hall",
+      "email": "liam.h@example.com",
+      "role": "Associate",
+      "department": "Sales",
+      "reportsTo": "emp_mgr_002"
+    },
+    {
+      "id": "emp_unassigned_001",
+      "firstName": "Grace",
+      "lastName": "Green",
+      "email": "grace.g@example.com",
+      "role": "Associate",
+      "department": "HR"
+     
+    }
   ]
 }
