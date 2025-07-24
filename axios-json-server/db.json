@@ -88,7 +88,6 @@
       "id": "91dd"
     }
   ],
- 
   "employees1": [
     {
       "id": "emp_ceo_001",
@@ -97,7 +96,6 @@
       "email": "elon@spacex.com",
       "role": "CEO",
       "department": "Executive"
-     
     },
     {
       "id": "emp_dir_001",
@@ -168,8 +166,19 @@
       "lastName": "Green",
       "email": "grace.g@example.com",
       "role": "Associate",
-      "department": "HR"
-     
+      "department": "HR",
+      "reportsTo": "emp_mgr_002"
+    }
+  ],
+  "users": [
+    {
+      "id": "09f6",
+      "name": "vimal",
+      "email": "vimal@example.com",
+      "password": "password",
+      "skills": [
+        "React"
+      ]
     }
   ]
 }
