@@ -179,6 +179,60 @@
       "skills": [
         "React"
       ]
+    },
+    {
+      "id": "2aaa",
+      "name": "bharath",
+      "email": "bharath@example.com",
+      "password": "password",
+      "skills": [
+        "nothing"
+      ]
+    },
+    {
+      "id": "2117",
+      "name": "Kumar",
+      "email": "kumar@example.com",
+      "password": "password",
+      "skills": [
+        "Farmer"
+      ]
+    },
+    {
+      "id": "4e61",
+      "name": "Dhoni",
+      "email": "dhoni@example.com",
+      "password": "password",
+      "skills": [
+        "Batting"
+      ]
+    }
+  ],
+  "project": [
+    {
+      "id": "1001",
+      "name": "vimal",
+      "email": "vimal@example.com",
+      "password": "password",
+      "role": "manager"
+    },
+    {
+      "id": "1002",
+      "name": "bharath",
+      "email": "bharath@example.com",
+      "password": "password",
+      "role": "associate",
+      "works": "worked on this that",
+      "star": "0"
+    },
+    {
+      "id": "1003",
+      "name": "kumar",
+      "email": "kumarl@example.com",
+      "password": "password",
+      "role": "associate",
+      "works": "",
+      "star": "0"
     }
   ]
 }
