@@ -30,12 +30,12 @@ const Layout = () => {
    
     <div className='d-flex flex-column min-vh-100 bg-light'>
 
-      <Header logout={logout}className="bg-primary text-white shadow" />
-      <div className="d-flex flex-grow-1 container-fluid py-4">
+      <Header logout={logout}/>
+      <div className="d-flex flex-grow-1 container-fluid ">
         <Sidebar setActiveTab={setActiveTab} />
 
        
-        <div className="col-md-9 p-4 bg-white shadow-sm rounded-end">
+        <div className="col-md-9 p-4 bg-white shadow-sm ">
          
           {activeTab==='dashboard' && <Dashboard user={user}/>}
           {activeTab==='rating' && <Rating user={user}/>}
@@ -43,7 +43,7 @@ const Layout = () => {
           
         </div>
       </div>
-      <Footer className="bg-secondary text-white p-3 text-center mt-auto" />
+      <Footer />
     </div>
   );
 };
