@@ -222,8 +222,13 @@
       "email": "bharath@example.com",
       "password": "password",
       "role": "associate",
-      "works": "worked on this that",
-      "star": "0"
+      "works": [
+        "worked on this that",
+        "completed",
+        "i am on leave for Summer"
+      ],
+      "reportsTo": "1001",
+      "star": "1"
     },
     {
       "id": "1003",
@@ -231,8 +236,28 @@
       "email": "kumarl@example.com",
       "password": "password",
       "role": "associate",
-      "works": "",
-      "star": "0"
+      "works": [],
+      "reportsTo": "1001",
+      "star": "4"
+    },
+    {
+      "id": "1004",
+      "name": "priya",
+      "email": "priya@example.com",
+      "password": "password",
+      "role": "manager"
+    },
+    {
+      "id": "1005",
+      "name": "suresh",
+      "email": "suresh@example.com",
+      "password": "password",
+      "role": "associate",
+      "works": [
+        "Researched market trends"
+      ],
+      "star": "4",
+      "reportsTo": "1004"
     }
   ]
 }

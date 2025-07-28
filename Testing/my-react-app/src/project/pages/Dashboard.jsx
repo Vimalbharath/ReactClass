@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      navigate('/login');
-      return;
-    }
-    setUser(JSON.parse(storedUser));
-  }, [navigate]);
-
-  const logout = () => {
-    localStorage.clear();
-    navigate('/login');
-  };
+const Dashboard = ({user}) => {
+ 
 
   return (
     <div>
@@ -31,7 +16,7 @@ const Dashboard = () => {
          
         </>
       )}
-      <button onClick={logout}>Logout</button>
+     
     </div>
   );
 };
