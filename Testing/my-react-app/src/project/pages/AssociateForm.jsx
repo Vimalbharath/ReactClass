@@ -6,12 +6,12 @@ const AssociateForm = ({ user, onUpdate }) => {
     // State to hold local associate data, useful if parent doesn't immediately re-fetch
     // const [localUser, setLocalUser] = useState(user);
 
-    // Update localUser if the 'user' prop changes (e.g., if parent re-fetches data)
-    // React.useEffect(() => {
-    //     setLocalUser(user);
-    // }, [user]);
+   // Update localUser if the 'user' prop changes (e.g., if parent re-fetches data)
+    React.useEffect(() => {
+        
+    }, [user]);
 
-    // Helper function to render star icons
+    //Helper function to render star icons
     const renderStars = (starCount) => {
         const stars = [];
         const numStars = parseInt(starCount, 10) || 0;
@@ -45,6 +45,7 @@ const AssociateForm = ({ user, onUpdate }) => {
             // JSON Server endpoint for a specific resource is /resource/:id
             const res = await api.patch(`/project/${user.id}`, { works: updatedWorks });
             console.log("Work added successfully:", res.data);
+            user=res.data;
 
             // If there's an onUpdate prop, call it to notify parent
             // if (onUpdate) {
