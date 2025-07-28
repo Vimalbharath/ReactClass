@@ -3,24 +3,10 @@ import api from '../api/axios';
 
 const ManagerForm = ({ user }) => { 
     const [directReports, setDirectReports] = useState([]);
-    // const [loadingReports, setLoadingReports] = useState(true);
-    // const [errorReports, setErrorReports] = useState(null);
     const [expandedAssociateId, setExpandedAssociateId] = useState(null);
-    // New state for managing star input values
     const [editingStars, setEditingStars] = useState({});
-
-    // Effect to fetch associates reporting to this manager
     useEffect(() => {
         const fetchDirectReports = async () => {
-            // if (!user || !user.id) {
-                // setLoadingReports(false);
-                // setErrorReports("Manager user data is missing.");
-                // return;
-            // }
-
-            // try {
-                // setLoadingReports(true);
-                // setErrorReports(null);
 
                 const res = await api.get('/project');
                 const allEmployees = Array.isArray(res.data) ? res.data : [];
@@ -31,12 +17,12 @@ const ManagerForm = ({ user }) => {
                 );
                 setDirectReports(filteredAssociates);
 
-                // Initialize editingStars state with current star values
-                const initialEditingStars = {};
-                filteredAssociates.forEach(assoc => {
-                    initialEditingStars[assoc.id] = assoc.star || "0";
-                });
-                setEditingStars(initialEditingStars);
+                // // Initialize editingStars state with current star values
+                // const initialEditingStars = {};
+                // filteredAssociates.forEach(assoc => {
+                //     initialEditingStars[assoc.id] = assoc.star || "0";
+                // });
+                // setEditingStars(initialEditingStars);
 
         //     } catch (err) {
         //         console.error("Error fetching direct reports:", err);
@@ -47,7 +33,7 @@ const ManagerForm = ({ user }) => {
         };
 
         fetchDirectReports();
-    }, [user.id]); // Dependency on user.id to refetch if manager changes
+    }, [user]); // Dependency on user.id to refetch if manager changes
 
     // Helper function to render star icons
     const renderStars = (starCount) => {
@@ -60,51 +46,51 @@ const ManagerForm = ({ user }) => {
     };
 
     // Handler for star input change
-    const handleStarChange = (associateId, value) => {
-        // Ensure value is a number string between 0 and 5
-        let numValue = parseInt(value, 10);
-        if (isNaN(numValue) || numValue < 0) numValue = 0;
-        if (numValue > 5) numValue = 5;
+    // const handleStarChange = (associateId, value) => {
+    //     // Ensure value is a number string between 0 and 5
+    //     let numValue = parseInt(value, 10);
+    //     if (isNaN(numValue) || numValue < 0) numValue = 0;
+    //     if (numValue > 5) numValue = 5;
 
-        setEditingStars(prevStars => ({
-            ...prevStars,
-            [associateId]: numValue.toString() // Store as string to match db.json
-        }));
-    };
+    //     setEditingStars(prevStars => ({
+    //         ...prevStars,
+    //         [associateId]: numValue.toString() // Store as string to match db.json
+    //     }));
+    // };
 
     // Handler to save stars when input loses focus or Enter is pressed
-    const saveStars = async (associateId) => {
-        const newStarValue = editingStars[associateId];
-        const associateToUpdate = directReports.find(assoc => assoc.id === associateId);
+    // const saveStars = async (associateId) => {
+    //     const newStarValue = editingStars[associateId];
+    //     const associateToUpdate = directReports.find(assoc => assoc.id === associateId);
 
-        if (!associateToUpdate || associateToUpdate.star === newStarValue) {
-            // No change or associate not found
-            return;
-        }
+    //     if (!associateToUpdate || associateToUpdate.star === newStarValue) {
+    //         // No change or associate not found
+    //         return;
+    //     }
 
-        try {
-            // Optimistically update UI
-            setDirectReports(prevReports =>
-                prevReports.map(report =>
-                    report.id === associateId ? { ...report, star: newStarValue } : report
-                )
-            );
+    //     try {
+    //         // Optimistically update UI
+    //         setDirectReports(prevReports =>
+    //             prevReports.map(report =>
+    //                 report.id === associateId ? { ...report, star: newStarValue } : report
+    //             )
+    //         );
 
-            // Send PATCH request to update only the 'star' field
-            // The JSON Server endpoint for a specific resource is /resource/:id
-            await api.patch(`/project/${associateId}`, { star: newStarValue });
-            console.log(`Stars updated for ${associateToUpdate.name} to ${newStarValue}`);
-        } catch (error) {
-            console.error(`Failed to update stars for ${associateToUpdate.name}:`, error);
-            setErrorReports(`Failed to save stars for ${associateToUpdate.name}.`);
-            // Rollback UI if update fails
-            setDirectReports(prevReports =>
-                prevReports.map(report =>
-                    report.id === associateId ? { ...report, star: associateToUpdate.star } : report
-                )
-            );
-        }
-    };
+    //         // Send PATCH request to update only the 'star' field
+    //         // The JSON Server endpoint for a specific resource is /resource/:id
+    //         await api.patch(`/project/${associateId}`, { star: newStarValue });
+    //         console.log(`Stars updated for ${associateToUpdate.name} to ${newStarValue}`);
+    //     } catch (error) {
+    //         console.error(`Failed to update stars for ${associateToUpdate.name}:`, error);
+    //         setErrorReports(`Failed to save stars for ${associateToUpdate.name}.`);
+    //         // Rollback UI if update fails
+    //         setDirectReports(prevReports =>
+    //             prevReports.map(report =>
+    //                 report.id === associateId ? { ...report, star: associateToUpdate.star } : report
+    //             )
+    //         );
+    //     }
+    // };
 
     const handleKeyDown = (e, associateId) => {
         if (e.key === 'Enter') {
@@ -116,9 +102,9 @@ const ManagerForm = ({ user }) => {
         setExpandedAssociateId(prevId => (prevId === associateId ? null : associateId));
     };
 
-    if (!user) {
-        return <div className="alert alert-info">No manager data provided.</div>;
-    }
+    // if (!user) {
+    //     return <div className="alert alert-info">No manager data provided.</div>;
+    // }
 
     return (
         <div className="card mb-4 shadow-sm">
