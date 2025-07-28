@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import api from '../api/axios'; 
 
-const AssociateForm = ({ user }) => { 
+const AssociateForm = ({ user}) => { 
+    const [currentUser,setCurrentUser]=useState(user);
     const [newWork, setNewWork] = useState('');
-    React.useEffect(() => {
+
+   useEffect(() => {
+       
+            localStorage.setItem('user', JSON.stringify(currentUser));
+             setNewWork('');
         
-    }, [user]);
+    }, [currentUser]);
 
     const renderStars = (starCount) => {
         const stars = [];
@@ -28,11 +33,11 @@ const AssociateForm = ({ user }) => {
             return;
         }
 
-        const updatedWorks = user.works ? [...user.works, newWork.trim()] : [newWork.trim()];
-            const res = await api.patch(`/project/${user.id}`, { works: updatedWorks });
+        const updatedWorks = currentUser.works ? [...currentUser.works, newWork.trim()] : [newWork.trim()];
+            const res = await api.patch(`/project/${currentUser.id}`, { works: updatedWorks });
             console.log("Work added successfully:", res.data);
-            user=res.data;
-
+            setCurrentUser(res.data);
+            
     };
 
   
@@ -42,19 +47,19 @@ const AssociateForm = ({ user }) => {
         }
     };
 
-    const tasks = Array.isArray(user.works) ? user.works : [];
+    const tasks = Array.isArray(currentUser.works) ? currentUser.works : [];
 
     return (
         <div className="card mb-4 shadow-sm">
             <div className="card-header bg-success text-white">
-                <h3 className="mb-0">Associate: {user.name}</h3>
-                <p className="mb-0"><small>Email: {user.email}</small></p>
+                <h3 className="mb-0">Associate: {currentUser.name}</h3>
+                <p className="mb-0"><small>Email: {currentUser.email}</small></p>
             </div>
             <div className="card-body">
                 <h4 className="card-title mb-3">Stars:</h4>
                 <div className="mb-3">
-                    {renderStars(user.star)}
-                    {user.star === "0" && <span className="text-muted ms-2">No stars yet</span>}
+                    {renderStars(currentUser.star)}
+                    {currentUser.star === "0" && <span className="text-muted ms-2">No stars yet</span>}
                 </div>
 
                 <h4 className="card-title mb-3">Tasks Performed:</h4>
