@@ -38,7 +38,15 @@ const AssociateDisplayCard = ({ associate}) => {
 
                 
                 <div className="d-flex align-items-center">
-                    {renderStars(associate.star)} 
+                    
+                    {(associate.star==0)?<button
+                        className="btn btn-info btn-sm ms-2"
+                       
+                    >
+                       Rate Stars
+                    </button>:renderStars(associate.star)}
+
+
                     <button
                         className="btn btn-info btn-sm ms-2"
                         onClick={toggleWorks}
