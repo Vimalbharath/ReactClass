@@ -228,7 +228,7 @@
         "i am on leave for Summer"
       ],
       "reportsTo": "1001",
-      "star": "1"
+      "star": "5"
     },
     {
       "id": "1003",
@@ -236,7 +236,11 @@
       "email": "kumarl@example.com",
       "password": "password",
       "role": "associate",
-      "works": [],
+      "works": [
+        "bvh",
+        "vbvh",
+        "nvksn"
+      ],
       "reportsTo": "1001",
       "star": "4"
     },

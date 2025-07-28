@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import api from '../api/axios'; // Make sure the path to your axios instance is correct
+import api from '../api/axios'; 
 
-const AssociateForm = ({ user, onUpdate }) => { // Added onUpdate prop for potential parent updates
-    // State for the new work task input
+const AssociateForm = ({ user, onUpdate }) => { 
     const [newWork, setNewWork] = useState('');
     // State to hold local associate data, useful if parent doesn't immediately re-fetch
-    const [localUser, setLocalUser] = useState(user);
+    // const [localUser, setLocalUser] = useState(user);
 
     // Update localUser if the 'user' prop changes (e.g., if parent re-fetches data)
-    React.useEffect(() => {
-        setLocalUser(user);
-    }, [user]);
+    // React.useEffect(() => {
+    //     setLocalUser(user);
+    // }, [user]);
 
     // Helper function to render star icons
     const renderStars = (starCount) => {
@@ -34,30 +33,30 @@ const AssociateForm = ({ user, onUpdate }) => { // Added onUpdate prop for poten
             return;
         }
 
-        const updatedWorks = localUser.works ? [...localUser.works, newWork.trim()] : [newWork.trim()];
-        const updatedAssociate = { ...localUser, works: updatedWorks };
+        const updatedWorks = user.works ? [...user.works, newWork.trim()] : [newWork.trim()];
+        // const updatedAssociate = { ...user, works: updatedWorks };
 
-        try {
+        // try {
             // Optimistically update UI
-            setLocalUser(updatedAssociate); // Update local state immediately
-            setNewWork(''); // Clear the input field
+            // setLocalUser(updatedAssociate); // Update local state immediately
+            // setNewWork(''); // Clear the input field
 
             // Send PATCH request to update the 'works' array for this associate
             // JSON Server endpoint for a specific resource is /resource/:id
-            const res = await api.patch(`/project/${localUser.id}`, { works: updatedWorks });
+            const res = await api.patch(`/project/${user.id}`, { works: updatedWorks });
             console.log("Work added successfully:", res.data);
 
             // If there's an onUpdate prop, call it to notify parent
-            if (onUpdate) {
-                onUpdate(res.data);
-            }
+            // if (onUpdate) {
+            //     onUpdate(res.data);
+            // }
 
-        } catch (error) {
-            console.error("Failed to add work:", error);
-            alert("Failed to add work. Please try again.");
-            // Rollback UI if update fails (optional, but good practice)
-            setLocalUser(user); // Revert to original user prop state
-        }
+        // } catch (error) {
+        //     console.error("Failed to add work:", error);
+        //     alert("Failed to add work. Please try again.");
+        //     // Rollback UI if update fails (optional, but good practice)
+        //     setLocalUser(user); // Revert to original user prop state
+        // }
     };
 
     // Handler for pressing Enter in the work input field
@@ -68,25 +67,25 @@ const AssociateForm = ({ user, onUpdate }) => { // Added onUpdate prop for poten
     };
 
 
-    if (!localUser) {
-        return <div className="alert alert-warning">No associate data available.</div>;
-    }
+    // if (!localUser) {
+    //     return <div className="alert alert-warning">No associate data available.</div>;
+    // }
 
     // Ensure localUser.works is an array or default to empty
-    const tasks = Array.isArray(localUser.works) ? localUser.works : [];
+    const tasks = Array.isArray(user.works) ? user.works : [];
 
     return (
         <div className="card mb-4 shadow-sm"> {/* Added shadow for consistent look */}
-            <div className="card-header bg-primary text-white">
-                <h3 className="mb-0">Associate: {localUser.name}</h3>
-                <p className="mb-0"><small>Email: {localUser.email}</small></p>
+            <div className="card-header bg-success text-white">
+                <h3 className="mb-0">Associate: {user.name}</h3>
+                <p className="mb-0"><small>Email: {user.email}</small></p>
             </div>
             <div className="card-body">
                 {/* Display Stars as Images */}
                 <h4 className="card-title mb-3">Stars:</h4>
                 <div className="mb-3">
-                    {renderStars(localUser.star)}
-                    {localUser.star === "0" && <span className="text-muted ms-2">No stars yet</span>}
+                    {renderStars(user.star)}
+                    {user.star === "0" && <span className="text-muted ms-2">No stars yet</span>}
                 </div>
 
                 {/* Task Performed Section */}
@@ -111,10 +110,10 @@ const AssociateForm = ({ user, onUpdate }) => { // Added onUpdate prop for poten
                         placeholder="Add new work task..."
                         value={newWork}
                         onChange={handleNewWorkChange}
-                        onKeyDown={handleKeyDown}
+                        // onKeyDown={handleKeyDown}
                     />
                     <button
-                        className="btn btn-outline-primary"
+                        className="btn btn-outline-success"
                         onClick={handleAddWork}
                     >
                         Add Task

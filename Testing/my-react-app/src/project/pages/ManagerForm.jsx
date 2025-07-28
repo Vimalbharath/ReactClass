@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 
-const ManagerForm = ({ user }) => { // 'user' is the logged-in manager
+const ManagerForm = ({ user }) => { 
     const [directReports, setDirectReports] = useState([]);
-    const [loadingReports, setLoadingReports] = useState(true);
-    const [errorReports, setErrorReports] = useState(null);
+    // const [loadingReports, setLoadingReports] = useState(true);
+    // const [errorReports, setErrorReports] = useState(null);
     const [expandedAssociateId, setExpandedAssociateId] = useState(null);
     // New state for managing star input values
     const [editingStars, setEditingStars] = useState({});
@@ -12,15 +12,15 @@ const ManagerForm = ({ user }) => { // 'user' is the logged-in manager
     // Effect to fetch associates reporting to this manager
     useEffect(() => {
         const fetchDirectReports = async () => {
-            if (!user || !user.id) {
-                setLoadingReports(false);
-                setErrorReports("Manager user data is missing.");
-                return;
-            }
+            // if (!user || !user.id) {
+                // setLoadingReports(false);
+                // setErrorReports("Manager user data is missing.");
+                // return;
+            // }
 
-            try {
-                setLoadingReports(true);
-                setErrorReports(null);
+            // try {
+                // setLoadingReports(true);
+                // setErrorReports(null);
 
                 const res = await api.get('/project');
                 const allEmployees = Array.isArray(res.data) ? res.data : [];
@@ -38,12 +38,12 @@ const ManagerForm = ({ user }) => { // 'user' is the logged-in manager
                 });
                 setEditingStars(initialEditingStars);
 
-            } catch (err) {
-                console.error("Error fetching direct reports:", err);
-                setErrorReports("Failed to load direct reports.");
-            } finally {
-                setLoadingReports(false);
-            }
+        //     } catch (err) {
+        //         console.error("Error fetching direct reports:", err);
+        //         setErrorReports("Failed to load direct reports.");
+        //     } finally {
+        //         setLoadingReports(false);
+        //     }
         };
 
         fetchDirectReports();
@@ -123,17 +123,19 @@ const ManagerForm = ({ user }) => { // 'user' is the logged-in manager
     return (
         <div className="card mb-4 shadow-sm">
             <div className="card-header bg-success text-white">
-                <h3 className="mb-0">Manager: {user.name}</h3>
+                <h3 className="mb-0">Manager: {user.name.toUpperCase()}</h3>
                 <p className="mb-0"><small>Email: {user.email}</small></p>
             </div>
 
             <div className="card-body">
                 <h5 className="mb-3 text-primary">Your Direct Reports (Associates)</h5>
-                {loadingReports ? (
+                {/* {loadingReports ? (
                     <p className="text-muted">Loading direct reports...</p>
                 ) : errorReports ? (
                     <div className="alert alert-danger">{errorReports}</div>
-                ) : directReports.length === 0 ? (
+                ) : } */}
+                
+                {directReports.length === 0 ? (
                     <p className="text-muted">You currently have no direct reports.</p>
                 ) : (
                     <ul className="list-group list-group-flush">
