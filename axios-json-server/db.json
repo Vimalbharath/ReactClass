@@ -288,19 +288,19 @@
           "startDate": "2024-01-10",
           "endDate": "2024-01-12",
           "reason": "Flu",
-          "status": "pending"
+          "status": "approved"
         },
         {
           "type": "casual-leave",
           "startDate": "2024-02-20",
           "endDate": "2024-02-20",
           "reason": "Personal work",
-          "status": "pending"
+          "status": "rejected"
         }
       ],
       "paid-leave-balance": {
         "sick-leave": 1,
-        "casual-leave": 1,
+        "casual-leave": null,
         "privilege-leave": 10
       },
       "reportsTo": "1001"
@@ -317,7 +317,15 @@
           "startDate": "2025-08-04",
           "endDate": "2025-08-05",
           "reason": "tired",
-          "status": "pending"
+          "status": "approved"
+        },
+        {
+          "type": "unpaid-leave",
+          "startDate": "2025-08-08",
+          "endDate": "2025-08-08",
+          "reason": "Summa",
+          "status": "approved",
+          "days": 1
         }
       ],
       "paid-leave-balance": {

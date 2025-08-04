@@ -2,44 +2,36 @@ import React, { useState, useEffect } from 'react';
 import api from '../api/axios';
 
 const AssociateForm = ({ user }) => {
-    // currentUser state should reflect the 'user' prop and update based on local changes
     const [currentUser, setCurrentUser] = useState(user);
-    const [error, setError] = useState(null); // For displaying API errors
+    const [error, setError] = useState(null);
 
-    // State for the new leave application form
     const [leaveRequest, setLeaveRequest] = useState({
-        type: '', // Default to empty, let user select from available types
+        type: '',
         startDate: '',
         endDate: '',
         reason: ''
     });
 
-    // --- Effects ---
-    // Effect to synchronize currentUser state with the 'user' prop
-    // This ensures if the 'user' prop changes from the parent, our internal state updates.
     useEffect(() => {
         if (user) {
             setCurrentUser(user);
-            // Set default leave type to the first available if not already set
-            if (!leaveRequest.type && user['paid-leave-balance'] && Object.keys(user['paid-leave-balance']).length > 0) {
+            if (!leaveRequest.type) {
+                const firstPaidLeaveType = Object.keys(user['paid-leave-balance'] || {})[0];
                 setLeaveRequest(prev => ({
                     ...prev,
-                    type: Object.keys(user['paid-leave-balance'])[0]
+                    type: firstPaidLeaveType || ''
                 }));
             }
         }
-        setError(null); // Clear errors when user prop updates
-    }, [user]); // Depend on the 'user' prop
+        setError(null);
+    }, [user]);
 
-    // Effect to update localStorage whenever currentUser changes.
-    // Assuming 'user' in localStorage is the key where this user's data is stored.
     useEffect(() => {
         if (currentUser && currentUser.id) {
-            localStorage.setItem('leave', JSON.stringify(currentUser));
+            localStorage.setItem('user', JSON.stringify(currentUser));
         }
     }, [currentUser]);
 
-    // --- Handlers for Leave Request Form ---
     const handleLeaveRequestChange = (e) => {
         const { name, value } = e.target;
         setLeaveRequest(prev => ({
@@ -51,7 +43,6 @@ const AssociateForm = ({ user }) => {
     const handleApplyLeave = async () => {
         const { type, startDate, endDate, reason } = leaveRequest;
 
-        // Basic validation
         if (!type || !startDate || !endDate || !reason.trim()) {
             setError('Please select a leave type and fill in all fields (start date, end date, reason).');
             return;
@@ -65,71 +56,62 @@ const AssociateForm = ({ user }) => {
             return;
         }
 
-        // Calculate number of days (simple calculation, adjust for weekends/holidays if needed)
         const diffTime = Math.abs(end - start);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end day
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-        // Check if associate has enough leave balance
-        const leaveBalances = currentUser['paid-leave-balance'] || {};
-        const availableBalance = leaveBalances[type] || 0;
+        let updatedLeaveBalances = { ...currentUser['paid-leave-balance'] };
 
-        if (availableBalance < diffDays) {
-            setError(`Insufficient ${type.replace(/-/g, ' ')} balance. Available: ${availableBalance} day(s), Requested: ${diffDays} day(s).`);
-            return;
+        if (type !== 'unpaid-leave') {
+            const availableBalance = updatedLeaveBalances[type] || 0;
+            if (availableBalance < diffDays) {
+                setError(`Insufficient ${type.replace(/-/g, ' ')} balance for paid leave. Available: ${availableBalance} day(s), Requested: ${diffDays} day(s). Please choose 'Unpaid Leave' if you wish to proceed.`);
+                return;
+            }
+            updatedLeaveBalances[type] = availableBalance - diffDays;
         }
 
-        setError(null); // Clear previous errors
+        setError(null);
 
         try {
-            // Prepare updated leave history
+            // --- FIX APPLIED HERE ---
+            // Ensure 'days: diffDays' is always included in the leave history object
+            const newLeaveEntry = { type, startDate, endDate, reason, status: 'pending', days: diffDays };
+
             const updatedLeaveHistory = currentUser['leave-history'] ?
-                [...currentUser['leave-history'], { type, startDate, endDate, reason, status: 'pending' }] :
-                [{ type, startDate, endDate, reason, status: 'pending' }];
+                [...currentUser['leave-history'], newLeaveEntry] :
+                [newLeaveEntry];
+            // --- END FIX ---
 
-            // Prepare updated leave balance (deducting the requested days)
-            const updatedLeaveBalances = {
-                ...leaveBalances,
-                [type]: availableBalance - diffDays
-            };
-
-            // Optimistically update UI
             setCurrentUser(prevUser => ({
                 ...prevUser,
                 'leave-history': updatedLeaveHistory,
                 'paid-leave-balance': updatedLeaveBalances
             }));
-            // Reset leave request form
-            setLeaveRequest({
-                type: Object.keys(paidLeaveBalance).length > 0 ? Object.keys(paidLeaveBalance)[0] : '', // Reset to first available type
+
+            setLeaveRequest(prev => ({
+                ...prev,
                 startDate: '',
                 endDate: '',
                 reason: ''
-            });
+            }));
 
-
-            // Send PATCH request to update the 'leave-history' and 'paid-leave-balance'
             const res = await api.patch(`/assessment/${currentUser.id}`, {
                 'leave-history': updatedLeaveHistory,
                 'paid-leave-balance': updatedLeaveBalances
             });
             console.log("Leave application successful:", res.data);
-            // Confirm with data from server, ensuring local state matches backend
             setCurrentUser(res.data);
 
         } catch (err) {
             console.error("Failed to apply for leave:", err);
             setError("Failed to apply for leave. Please try again.");
-            // Rollback optimistic update if API call fails
-            setCurrentUser(user); // Revert to original user prop state
+            setCurrentUser(user);
         }
     };
 
-    // --- Derived Data ---
     const leaveHistory = Array.isArray(currentUser['leave-history']) ? currentUser['leave-history'] : [];
     const paidLeaveBalance = currentUser['paid-leave-balance'] || {};
 
-    // --- Render Logic ---
-    // If user prop is not valid initially, display a loading/error message
     if (!user || !user.id) {
         return <div className="alert alert-info">Associate data not available.</div>;
     }
@@ -144,7 +126,6 @@ const AssociateForm = ({ user }) => {
             <div className="card-body">
                 {error && <div className="alert alert-danger">{error}</div>}
 
-                {/* Leave Balance Section */}
                 <div className="mb-4">
                     <h5 className="mb-3">Current Leave Balances:</h5>
                     <ul className="list-group list-group-flush">
@@ -163,9 +144,8 @@ const AssociateForm = ({ user }) => {
 
                 <hr />
 
-                {/* Apply for Leave Section */}
                 <h5 className="mb-3">Apply for Leave:</h5>
-                <form onSubmit={(e) => e.preventDefault()}> {/* Prevent default form submission */}
+                <form onSubmit={(e) => e.preventDefault()}>
                     <div className="mb-3">
                         <label htmlFor="leaveType" className="form-label">Leave Type:</label>
                         <select
@@ -176,14 +156,17 @@ const AssociateForm = ({ user }) => {
                             onChange={handleLeaveRequestChange}
                             required
                         >
-                            <option value="">-- Select Leave Type --</option> {/* Added a default empty option */}
-                            {Object.keys(paidLeaveBalance).length > 0 ? (
-                                Object.keys(paidLeaveBalance).map(type => (
-                                    <option key={type} value={type}>{type.replace(/-/g, ' ').toUpperCase()}</option>
-                                ))
-                            ) : (
-                                <option disabled>No leave types available</option>
+                            <option value="">-- Select Leave Type --</option>
+                            {Object.keys(paidLeaveBalance).length > 0 && (
+                                <optgroup label="Paid Leaves">
+                                    {Object.keys(paidLeaveBalance).map(type => (
+                                        <option key={type} value={type}>{type.replace(/-/g, ' ').toUpperCase()}</option>
+                                    ))}
+                                </optgroup>
                             )}
+                            <optgroup label="Unpaid Leave">
+                                <option value="unpaid-leave">UNPAID LEAVE</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div className="mb-3">
@@ -230,14 +213,12 @@ const AssociateForm = ({ user }) => {
 
                 <hr />
 
-                {/* Leave History Section */}
                 <h5 className="mb-3">My Leave History:</h5>
                 {leaveHistory.length > 0 ? (
                     <ul className="list-group">
-                        {/* Sort leave history by start date, newest first (optional) */}
                         {leaveHistory.slice().sort((a, b) => new Date(b.startDate) - new Date(a.startDate)).map((leave, index) => (
                             <li key={index} className="list-group-item">
-                                <strong>{leave.type.replace(/-/g, ' ').toUpperCase()}</strong> from {leave.startDate} to {leave.endDate}
+                                <strong>{leave.type.replace(/-/g, ' ').toUpperCase()}</strong> from {leave.startDate} to {leave.endDate} ({leave.days} day{leave.days !== 1 ? 's' : ''})
                                 <br />
                                 Reason: {leave.reason}
                                 <span className={`badge ms-2 ${leave.status === 'pending' ? 'bg-warning text-dark' : leave.status === 'approved' ? 'bg-success' : 'bg-danger'}`}>
