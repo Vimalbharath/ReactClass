@@ -28,7 +28,7 @@ const AssociateForm = ({ user }) => {
 
     useEffect(() => {
         if (currentUser && currentUser.id) {
-            localStorage.setItem('user', JSON.stringify(currentUser));
+            localStorage.setItem('leave', JSON.stringify(currentUser));
         }
     }, [currentUser]);
 

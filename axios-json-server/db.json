@@ -353,11 +353,19 @@
           "reason": "Festival",
           "status": "pending",
           "days": 1
+        },
+        {
+          "type": "casual-leave",
+          "startDate": "2025-08-28",
+          "endDate": "2025-08-28",
+          "reason": "Leave",
+          "status": "pending",
+          "days": 1
         }
       ],
       "paid-leave-balance": {
         "sick-leave": 0,
-        "casual-leave": 1,
+        "casual-leave": 0,
         "privilege-leave": 7
       },
       "reportsTo": "1001"

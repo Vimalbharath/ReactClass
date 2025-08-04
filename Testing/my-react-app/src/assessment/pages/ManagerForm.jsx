@@ -36,6 +36,7 @@ const ManagerForm = ({ user }) => {
                 }
             });
             setPendingLeaveRequests(pending);
+            console.log(pending);
 
         } catch (err) {
             console.error("Failed to fetch direct reports or leave requests:", err);
@@ -54,19 +55,9 @@ const ManagerForm = ({ user }) => {
         try {
             const associate = directReports.find(report => report.id === associateId);
 
-            if (!associate) {
-                setError("Associate not found for this leave action.");
-                return;
-            }
 
             const updatedLeaveHistory = associate['leave-history'].map(leave => {
-                if (
-                    leave.startDate === leaveRequestToUpdate.startDate &&
-                    leave.endDate === leaveRequestToUpdate.endDate &&
-                    leave.type === leaveRequestToUpdate.type &&
-                    leave.reason === leaveRequestToUpdate.reason &&
-                    leave.status === 'pending'
-                ) {
+                if (leave.status === 'pending' ) {
                     return { ...leave, status: newStatus };
                 }
                 return leave;
