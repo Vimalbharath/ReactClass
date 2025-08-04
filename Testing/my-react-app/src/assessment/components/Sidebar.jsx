@@ -17,7 +17,7 @@ const Sidebar = ({ setActiveTab }) => {
         </li>
         <li className="nav-item">
           <button
-            className={`nav-link `}
+            className="nav-link "
             onClick={() => setActiveTab('rating')}
           >
             Leave Management

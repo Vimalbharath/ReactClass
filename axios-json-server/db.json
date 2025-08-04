@@ -288,14 +288,16 @@
           "startDate": "2024-01-10",
           "endDate": "2024-01-12",
           "reason": "Flu",
-          "status": "approved"
+          "status": "approved",
+          "days": 2
         },
         {
           "type": "casual-leave",
           "startDate": "2024-02-20",
           "endDate": "2024-02-20",
           "reason": "Personal work",
-          "status": "rejected"
+          "status": "rejected",
+          "days": 1
         }
       ],
       "paid-leave-balance": {
@@ -317,7 +319,8 @@
           "startDate": "2025-08-04",
           "endDate": "2025-08-05",
           "reason": "tired",
-          "status": "approved"
+          "status": "approved",
+          "days": 2
         },
         {
           "type": "unpaid-leave",
@@ -326,12 +329,36 @@
           "reason": "Summa",
           "status": "approved",
           "days": 1
+        },
+        {
+          "type": "casual-leave",
+          "startDate": "2025-08-04",
+          "endDate": "2025-08-04",
+          "reason": "dhes",
+          "status": "rejected",
+          "days": 1
+        },
+        {
+          "type": "privilege-leave",
+          "startDate": "2025-08-07",
+          "endDate": "2025-08-07",
+          "reason": "Venum",
+          "status": "approved",
+          "days": 1
+        },
+        {
+          "type": "casual-leave",
+          "startDate": "2025-08-27",
+          "endDate": "2025-08-27",
+          "reason": "Festival",
+          "status": "pending",
+          "days": 1
         }
       ],
       "paid-leave-balance": {
         "sick-leave": 0,
-        "casual-leave": 2,
-        "privilege-leave": 8
+        "casual-leave": 1,
+        "privilege-leave": 7
       },
       "reportsTo": "1001"
     },
@@ -348,7 +375,16 @@
       "email": "suresh@example.com",
       "password": "password",
       "role": "associate",
-      "leave-history": [],
+      "leave-history": [
+        {
+          "type": "unpaid-leave",
+          "startDate": "2025-08-04",
+          "endDate": "2025-08-04",
+          "reason": "Trip",
+          "status": "pending",
+          "days": 1
+        }
+      ],
       "paid-leave-balance": {
         "sick-leave": 0,
         "casual-leave": 5,

@@ -1,4 +1,3 @@
-// src/components/ManagerForm.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../api/axios';
 
@@ -8,7 +7,6 @@ const ManagerForm = ({ user }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // useCallback to memoize the fetch function, preventing unnecessary re-creation
     const fetchDirectReports = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -16,14 +14,12 @@ const ManagerForm = ({ user }) => {
             const res = await api.get('/assessment');
             const allEmployees = Array.isArray(res.data) ? res.data : [];
 
-            // Filter for direct reports of the current manager
             const filteredAssociates = allEmployees.filter(
                 (employee) =>
                     employee.role === 'associate' && employee.reportsTo === user.id
             );
             setDirectReports(filteredAssociates);
 
-            // Filter for pending leave requests from these direct reports
             const pending = [];
             filteredAssociates.forEach(associate => {
                 if (associate['leave-history'] && Array.isArray(associate['leave-history'])) {
@@ -33,7 +29,6 @@ const ManagerForm = ({ user }) => {
                                 associateId: associate.id,
                                 associateName: associate.name,
                                 leaveRequest: leave,
-                                // Create a robust unique ID for the leave request
                                 leaveRequestId: `${associate.id}-${leave.startDate}-${leave.endDate}-${leave.type}-${leaveIndex}`
                             });
                         }
@@ -48,18 +43,15 @@ const ManagerForm = ({ user }) => {
         } finally {
             setLoading(false);
         }
-    }, [user.id]); // Dependency on user.id to refetch if manager changes
+    }, [user.id]);
 
-    // Initial fetch of direct reports and their pending leaves when the component mounts
     useEffect(() => {
         fetchDirectReports();
-    }, [fetchDirectReports]); // Dependency on the memoized fetchDirectReports function
+    }, [fetchDirectReports]);
 
-    // --- Leave Request Action Handlers ---
     const handleLeaveAction = async (associateId, leaveRequestToUpdate, newStatus) => {
-        setError(null); // Clear previous errors
+        setError(null);
         try {
-            // Find the specific associate from the current directReports state
             const associate = directReports.find(report => report.id === associateId);
 
             if (!associate) {
@@ -67,37 +59,31 @@ const ManagerForm = ({ user }) => {
                 return;
             }
 
-            // Map over the associate's leave history to update the status of the specific request
             const updatedLeaveHistory = associate['leave-history'].map(leave => {
-                // We use multiple properties to ensure we're targeting the correct unique leave request
                 if (
                     leave.startDate === leaveRequestToUpdate.startDate &&
                     leave.endDate === leaveRequestToUpdate.endDate &&
                     leave.type === leaveRequestToUpdate.type &&
                     leave.reason === leaveRequestToUpdate.reason &&
-                    leave.status === 'pending' // Only update if it's currently pending
+                    leave.status === 'pending'
                 ) {
-                    return { ...leave, status: newStatus }; // Update status
+                    return { ...leave, status: newStatus };
                 }
-                return leave; // Return unchanged if not the target leave request
+                return leave;
             });
 
-            // Prepare updated leave balances (important for rejection of paid leave)
             let updatedLeaveBalances = { ...associate['paid-leave-balance'] };
             if (newStatus === 'rejected' && leaveRequestToUpdate.type !== 'unpaid-leave') {
-                // If a paid leave is rejected, add the days back to the balance
                 updatedLeaveBalances[leaveRequestToUpdate.type] =
                     (updatedLeaveBalances[leaveRequestToUpdate.type] || 0) + leaveRequestToUpdate.days;
             }
 
-            // Send PATCH request to update the associate's record in the backend
             const res = await api.patch(`/assessment/${associateId}`, {
                 'leave-history': updatedLeaveHistory,
-                'paid-leave-balance': updatedLeaveBalances // Update balances only if relevant
+                'paid-leave-balance': updatedLeaveBalances
             });
             console.log(`Leave request ${newStatus} for ${associate.name}:`, res.data);
 
-            // Re-fetch all reports after successful update to refresh the UI
             fetchDirectReports();
 
         } catch (err) {
@@ -105,7 +91,6 @@ const ManagerForm = ({ user }) => {
             setError(`Failed to ${newStatus} leave request. Please try again.`);
         }
     };
-
 
     return (
         <div className="card mb-4 shadow-sm">
@@ -117,16 +102,14 @@ const ManagerForm = ({ user }) => {
             <div className="card-body">
                 {error && <div className="alert alert-danger">{error}</div>}
 
-              
 
-                {/* Section for Pending Leave Requests */}
                 <h5 className="mb-3 text-warning">Pending Leave Requests from Direct Reports</h5>
                 {loading ? (
                     <p>Loading pending leave requests...</p>
                 ) : pendingLeaveRequests.length === 0 ? (
                     <p className="text-muted">No pending leave requests at this time.</p>
                 ) : (
-                    <ul className="list-group"> {/* Changed to ul for better list styling */}
+                    <ul className="list-group">
                         {pendingLeaveRequests.map((request) => (
                             <li key={request.leaveRequestId} className="list-group-item d-flex justify-content-between align-items-center mb-2">
                                 <div>
@@ -137,9 +120,9 @@ const ManagerForm = ({ user }) => {
                                     </small>
                                     <p className="mb-0 text-muted fst-italic">Reason: {request.leaveRequest.reason}</p>
                                 </div>
-                                <div className="d-flex flex-column flex-md-row"> {/* Responsive buttons */}
+                                <div className="d-flex flex-column flex-md-row">
                                     <button
-                                        className="btn btn-success btn-sm me-md-2 mb-2 mb-md-0" // Margin for spacing
+                                        className="btn btn-success btn-sm me-md-2 mb-2 mb-md-0"
                                         onClick={() => handleLeaveAction(request.associateId, request.leaveRequest, 'approved')}
                                     >
                                         Approve
