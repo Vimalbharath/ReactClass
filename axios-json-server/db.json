@@ -267,5 +267,86 @@
       "star": "1",
       "reportsTo": "1004"
     }
+  ],
+  "assessment": [
+    {
+      "id": "1001",
+      "name": "vimalbharath",
+      "email": "vimal@example.com",
+      "password": "password",
+      "role": "manager"
+    },
+    {
+      "id": "1002",
+      "name": "bharath",
+      "email": "bharath@example.com",
+      "password": "password",
+      "role": "associate",
+      "leave-history": [
+        {
+          "type": "sick-leave",
+          "startDate": "2024-01-10",
+          "endDate": "2024-01-12",
+          "reason": "Flu",
+          "status": "pending"
+        },
+        {
+          "type": "casual-leave",
+          "startDate": "2024-02-20",
+          "endDate": "2024-02-20",
+          "reason": "Personal work",
+          "status": "pending"
+        }
+      ],
+      "paid-leave-balance": {
+        "sick-leave": 1,
+        "casual-leave": 1,
+        "privilege-leave": 10
+      },
+      "reportsTo": "1001"
+    },
+    {
+      "id": "1003",
+      "name": "kumar",
+      "email": "kumarl@example.com",
+      "password": "password",
+      "role": "associate",
+      "leave-history": [
+        {
+          "type": "sick-leave",
+          "startDate": "2025-08-04",
+          "endDate": "2025-08-05",
+          "reason": "tired",
+          "status": "pending"
+        }
+      ],
+      "paid-leave-balance": {
+        "sick-leave": 0,
+        "casual-leave": 2,
+        "privilege-leave": 8
+      },
+      "reportsTo": "1001"
+    },
+    {
+      "id": "1004",
+      "name": "priya",
+      "email": "priya@example.com",
+      "password": "password",
+      "role": "manager"
+    },
+    {
+      "id": "1005",
+      "name": "suresh",
+      "email": "suresh@example.com",
+      "password": "password",
+      "role": "associate",
+      "leave-history": [],
+      "paid-leave-balance": {
+        "sick-leave": 0,
+        "casual-leave": 5,
+        "privilege-leave": 15
+      },
+      "reportsTo": "1004"
+    }
   ]
 }

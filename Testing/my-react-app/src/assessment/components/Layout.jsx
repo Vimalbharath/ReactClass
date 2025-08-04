@@ -1,0 +1,51 @@
+import React from 'react';
+import {useState,useEffect} from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import Sidebar from './Sidebar';
+import Dashboard from '../pages/Dashboard';
+import Leaves from '../pages/Leaves';
+import { useNavigate } from 'react-router-dom';
+
+const Layout = () => {
+  const [activeTab,setActiveTab]=useState('dashboard');
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('leave');
+    if (!storedUser) {
+      navigate('/login');
+      return;
+    }
+    setUser(JSON.parse(storedUser));
+  }, [navigate]);
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  return (
+   
+    <div className='d-flex flex-column min-vh-100 bg-light'>
+
+      <Header logout={logout}/>
+      <div className="d-flex flex-grow-1 container-fluid ">
+        <Sidebar setActiveTab={setActiveTab} />
+
+       
+        <div className="col-md-9 p-4 bg-white shadow-sm ">
+         
+          {activeTab==='dashboard' && <Dashboard user={user}/>}
+          {activeTab==='rating' && <Leaves user={user}/>}
+    
+          
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default Layout;
