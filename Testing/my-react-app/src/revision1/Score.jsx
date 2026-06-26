@@ -11,9 +11,9 @@ const Score=()=>{
     }
     return (
         <div>
-            <button onClick={decrease}>-</button>
+            <button onClick={()=>{setScore(score-1)}}>-</button>
             <div>{score}</div>
-            <button onClick={increase}>+</button>
+            <button onClick={()=>increase(score)}>+</button>
         </div>
     )
 }
