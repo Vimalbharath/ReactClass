@@ -5,12 +5,13 @@ import axios from 'axios';
 function BooksAxios(){
     const [books,setBooks]=useState([]);
     const URL='http://localhost:3006/books'
-    async function fetchBooks(){
-        const response=await axios.get(URL);
-        //console.log(response)
-        //const data=await response.json();
-        setBooks(response.data);
-        //  console.log(books);
+    function fetchBooks(){
+        fetch(URL)
+        .then((res)=>res.json())
+        .then((data)=> setBooks(data))
+       
+       
+       
     }
     useEffect(()=>{
         fetchBooks();
