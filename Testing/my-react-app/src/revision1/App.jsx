@@ -1,12 +1,20 @@
+import React from 'react';
 import Student from "./Student";
 
-const App=()=> {
-    const name="Vimalbharath Kumar";
-    return (
+class App extends React.Component {
+    constructor(props){
+        super(props)
+        this.state={name:"Vimalbharath Kumar"};
+    }
+    render(){
+         return (
         <div>  
-            <Student name={name}/>
+            <Student name={this.state.name}/>
         </div>
     )   
+
+    }
+   
 }
 
 export default App;
