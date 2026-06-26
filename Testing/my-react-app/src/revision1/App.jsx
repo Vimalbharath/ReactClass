@@ -1,5 +1,6 @@
 import React from 'react';
 import Student from "./Student";
+import Score from './Score';
 
 class App extends React.Component {
     constructor(props){
@@ -10,6 +11,7 @@ class App extends React.Component {
          return (
         <div>  
             <Student name={this.state.name}/>
+            <Score/>
         </div>
     )   
 
