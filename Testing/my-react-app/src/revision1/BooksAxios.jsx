@@ -6,19 +6,19 @@ function BooksAxios(){
     const URL='http://localhost:3006/books'
     async function fetchBooks(){
         const response=await fetch(URL);
-        console.log(response)
+        //console.log(response)
         const data=await response.json();
         setBooks(data);
-          console.log(books);
+        //  console.log(books);
     }
     useEffect(()=>{
         fetchBooks();
       
     },[])
      // 2. Separate useEffect to log books ONLY after state has officially updated
-    useEffect(() => {
-        console.log("Books state updated successfully:", books);
-    }, [books]); 
+    // useEffect(() => {
+    //     console.log("Books state updated successfully:", books);
+    // }, [books]); 
 
     // book=books.map((id,book)=>{
     //         return (
@@ -35,9 +35,16 @@ function BooksAxios(){
         <div>
            {vimal.map((v,id)=>{
             return(
-                <div key='id'>{v}</div>
+                <div key={id}>{v}</div>
             )
            })}
+           {books.map((book,id)=>{
+            return (
+                <div key={id}>{book.author} {book.id}{book.book} {book.description}</div>
+            )
+           })
+
+           }
         </div>
     )
 }
