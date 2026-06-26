@@ -1,6 +1,7 @@
 import React from 'react';
 import Student from "./Student";
 import Score from './Score';
+import BooksAxios from './BooksAxios';
 
 class App extends React.Component {
     constructor(props){
@@ -12,6 +13,7 @@ class App extends React.Component {
         <div>  
             <Student name={this.state.name}/>
             <Score/>
+            <BooksAxios/>
         </div>
     )   
 
