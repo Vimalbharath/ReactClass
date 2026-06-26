@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import axios from 'axios';
 
 
 function BooksAxios(){
     const [books,setBooks]=useState([]);
     const URL='http://localhost:3006/books'
     async function fetchBooks(){
-        const response=await fetch(URL);
+        const response=await axios.get(URL);
         //console.log(response)
-        const data=await response.json();
-        setBooks(data);
+        //const data=await response.json();
+        setBooks(response.data);
         //  console.log(books);
     }
     useEffect(()=>{
