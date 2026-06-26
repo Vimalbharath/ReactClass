@@ -42,7 +42,10 @@ function BooksAxios(){
            })}
            {books.map((book,id)=>{
             return (
-                <div key={id}>{book.author} {book.id}{book.book} {book.description}</div>
+                <div key={id}>
+                <div >{book.author} </div>
+                <div>{book.id}{book.book} {book.description}</div>
+                </div>
             )
            })
 
