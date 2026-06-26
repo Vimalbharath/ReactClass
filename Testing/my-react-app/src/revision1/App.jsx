@@ -1,7 +1,10 @@
+import Student from "./Student";
+
 const App=()=> {
+    const name="Vimalbharath Kumar";
     return (
         <div>  
-            Vimal
+            <Student name={name}/>
         </div>
     )   
 }
