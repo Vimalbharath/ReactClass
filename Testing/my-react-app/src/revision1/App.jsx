@@ -7,6 +7,7 @@ import Counter2, { CounterProvider } from './useReducerContext';
 import { Provider } from 'react-redux';
 import store from './reduxtoolkit/store';
 import Counter3 from './reduxtoolkit/Counter';
+import User from './thunk/user';
 
 class App extends React.Component {
     constructor(props){
@@ -30,6 +31,9 @@ class App extends React.Component {
             <Counter2/>
             With ReduxToolkit
             <Counter3/>
+            With Redux and Thunk
+            <User/>
+            
         </div>
         </CounterProvider>
         </Provider>
