@@ -4,6 +4,9 @@ import Score from './Score';
 import BooksAxios from './BooksAxios';
 import Counter1 from './usereducer_counter';
 import Counter2, { CounterProvider } from './useReducerContext';
+import { Provider } from 'react-redux';
+import store from './reduxtoolkit/store';
+import Counter3 from './reduxtoolkit/Counter';
 
 class App extends React.Component {
     constructor(props){
@@ -12,6 +15,7 @@ class App extends React.Component {
     }
     render(){
          return (
+        <Provider store={store}>
         <CounterProvider>
         <div>  
             Start with Prop, state Function -{`>`} Class
@@ -24,8 +28,11 @@ class App extends React.Component {
             <Counter1/>
             With useReducer , useContext
             <Counter2/>
+            With ReduxToolkit
+            <Counter3/>
         </div>
         </CounterProvider>
+        </Provider>
     )   
 
     }
