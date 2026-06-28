@@ -5,7 +5,7 @@ import BooksAxios from './BooksAxios';
 import Counter1 from './usereducer_counter';
 import Counter2, { CounterProvider } from './useReducerContext';
 import { Provider } from 'react-redux';
-import store from './reduxtoolkit/store';
+import store from './thunk/store';
 import Counter3 from './reduxtoolkit/Counter';
 import User from './thunk/user';
 
@@ -30,10 +30,10 @@ class App extends React.Component {
             With useReducer , useContext
             <Counter2/>
             With ReduxToolkit
-            <Counter3/>
+
             With Redux and Thunk
             <User/>
-            
+
         </div>
         </CounterProvider>
         </Provider>
