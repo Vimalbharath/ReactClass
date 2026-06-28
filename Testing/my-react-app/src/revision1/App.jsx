@@ -3,7 +3,7 @@ import Student from "./Student";
 import Score from './Score';
 import BooksAxios from './BooksAxios';
 import Counter1 from './usereducer_counter';
-import Counter2 from './useReducerContext';
+import Counter2, { CounterProvider } from './useReducerContext';
 
 class App extends React.Component {
     constructor(props){
@@ -12,6 +12,7 @@ class App extends React.Component {
     }
     render(){
          return (
+        <CounterProvider>
         <div>  
             Start with Prop, state Function -{`>`} Class
             <Student name={this.state.name}/>
@@ -24,6 +25,7 @@ class App extends React.Component {
             With useReducer , useContext
             <Counter2/>
         </div>
+        </CounterProvider>
     )   
 
     }
